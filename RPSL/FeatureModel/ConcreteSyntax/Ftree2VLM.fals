@@ -1,0 +1,65 @@
+module FeatureModel/ConcreteSyntax/Ftree2VLM
+
+open FeatureModel/AbstractSyntax/ASM
+open FeatureModel/ConcreteSyntax/LightningVLM
+
+one sig CREATE{
+	feature: Feature->RECTANGLE,
+	specArc: Feature -> Feature -> CONNECTOR,
+	containArc: Feature -> Feature -> CONNECTOR,
+	reqArc: Feature -> Feature -> CONNECTOR,
+	exclArc: Feature -> Feature -> CONNECTOR,
+}
+
+
+pred guard_feature(f:ASM/Feature) {
+}
+
+pred value_feature(f:Feature, r:LightningVLM/RECTANGLE) {
+	r.color=(f in Configuration.selectedFeatures implies GREEN else WHITE) 
+}
+
+
+pred guard_specArc(f:ASM/Feature, f2:ASM/Feature) {
+	f->f2 in spec
+}
+
+pred value_specArc(f:ASM/Feature, f2:ASM/Feature, c:LightningVLM/CONNECTOR) {
+	c.source= CREATE.feature[f]
+	c.target= CREATE.feature[f2]
+	c.color=BLUE
+}
+
+
+pred guard_containArc(f:ASM/Feature, f2:ASM/Feature) {
+	f->f2 in contain
+}
+
+pred value_containArc(f:ASM/Feature, f2:ASM/Feature, c:LightningVLM/CONNECTOR) {
+	c.source= CREATE.feature[f]
+	c.target= CREATE.feature[f2]
+	c.color=BLACK
+}
+
+
+pred guard_reqArc(f:ASM/Feature, f2:ASM/Feature) {
+		f->f2 in required
+}
+
+pred value_reqArc(f:ASM/Feature, f2:ASM/Feature, c:LightningVLM/CONNECTOR) {
+	c.source= CREATE.feature[f]
+	c.target= CREATE.feature[f2]
+	c.color=GREEN
+}
+
+pred guard_exclArc(f:ASM/Feature, f2:ASM/Feature) {
+		f->f2 in excluded
+}
+
+pred value_exclArc(f:ASM/Feature, f2:ASM/Feature, c:LightningVLM/CONNECTOR) {
+		c.source= CREATE.feature[f]
+		c.target= CREATE.feature[f2]
+		c.color=RED
+}
+
+

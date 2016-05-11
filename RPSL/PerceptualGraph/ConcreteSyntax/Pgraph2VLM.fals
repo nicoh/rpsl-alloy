@@ -1,0 +1,85 @@
+module PerceptualGraph/ConcreteSyntax/Pgraph2VLM
+
+open PerceptualGraph/AbstractSyntax/ASM
+open PerceptualGraph/ConcreteSyntax/LightningVLM
+
+one sig CREATE{
+	mainFrame : Component -> INVISIBLE_CONTAINER,
+	inputFrame: ProcessingComponent -> INVISIBLE_CONTAINER,
+	outputFrame: Component -> INVISIBLE_CONTAINER,
+	inputPort: Input -> RECTANGLE,
+	outputPort: Output -> RECTANGLE,
+	component : Component -> RECTANGLE,
+	arc: Output -> Input -> CONNECTOR,
+	text: Component -> TEXT,
+}
+
+
+
+pred guard_component(c:Component) {
+}
+pred value_component(c:Component, r:RECTANGLE) {
+	r.color= (c in ProcessingComponent implies WHITE else BLACK)
+}
+
+pred guard_arc(o:Output, i:Input) {
+	o->i in PerceptualGraph.connections
+}
+
+pred value_arc(o:Output, i:Input, c:CONNECTOR) {
+	c.source=CREATE.outputPort[o]
+	c.target=CREATE.inputPort[i]
+	c.color=RED
+}
+
+pred guard_text(c:Component) {
+}
+
+pred value_text(c:Component, t:TEXT) {
+	t.textLabel[0]=c
+	t in CREATE.(component)[c].composedOf[0]
+	t.color=(c in SensorComponent implies WHITE else BLACK)
+}
+
+pred guard_mainFrame(c:ASM/Component) {
+}
+
+pred value_mainFrame(c:ASM/Component, i:LightningVLM/INVISIBLE_CONTAINER) {
+	i.composedOf[0]=CREATE.inputFrame[c]
+	i.composedOf[1]=CREATE.component[c]
+	i.composedOf[2]=CREATE.outputFrame[c]
+	i.layout=HORIZONTAL_LAYOUT
+}
+
+pred guard_inputFrame(p:ASM/ProcessingComponent) {
+	p.input!=none
+}
+
+pred value_inputFrame(p:ASM/ProcessingComponent, i:LightningVLM/INVISIBLE_CONTAINER) {
+	i.layout= VERTICAL_LAYOUT
+}
+
+pred guard_outputFrame(c:ASM/Component) {
+	c.output!=none
+}
+
+pred value_outputFrame(c:ASM/Component, i:LightningVLM/INVISIBLE_CONTAINER) {
+	i.layout=VERTICAL_LAYOUT
+}
+
+pred guard_inputPort(i:ASM/Input) {
+}
+
+pred value_inputPort(i:ASM/Input, r:LightningVLM/RECTANGLE) {
+	r.color=GREEN
+	r in CREATE.inputFrame[i.~input].composedOf[0]
+}
+
+pred guard_outputPort(o:ASM/Output) {
+}
+
+pred value_outputPort(o:ASM/Output, r:LightningVLM/RECTANGLE) {
+	r.color=RED
+	r in CREATE.outputFrame[o.~output].composedOf[0]
+}
+
