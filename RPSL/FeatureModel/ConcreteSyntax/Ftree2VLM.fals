@@ -1,65 +1,76 @@
 module FeatureModel/ConcreteSyntax/Ftree2VLM
 
-open FeatureModel/AbstractSyntax/ASM
+//open FeatureModel/AbstractSyntax/AbstractFeatureTree
+
+open FeatureModel/AbstractSyntax/PickAndPlace
 open FeatureModel/ConcreteSyntax/LightningVLM
 
 one sig CREATE{
 	feature: Feature->RECTANGLE,
+	text: Feature->TEXT,
 	specArc: Feature -> Feature -> CONNECTOR,
 	containArc: Feature -> Feature -> CONNECTOR,
 	reqArc: Feature -> Feature -> CONNECTOR,
 	exclArc: Feature -> Feature -> CONNECTOR,
-}
+} 
 
 
-pred guard_feature(f:ASM/Feature) {
+pred guard_feature(f:Feature) {
 }
 
 pred value_feature(f:Feature, r:LightningVLM/RECTANGLE) {
 	r.color=(f in Configuration.selectedFeatures implies GREEN else WHITE) 
+	r.composedOf[0]= CREATE.text[f]
 }
 
 
-pred guard_specArc(f:ASM/Feature, f2:ASM/Feature) {
+pred guard_specArc(f:Feature, f2:Feature) {
 	f->f2 in spec
 }
 
-pred value_specArc(f:ASM/Feature, f2:ASM/Feature, c:LightningVLM/CONNECTOR) {
+pred value_specArc(f:Feature, f2:Feature, c:LightningVLM/CONNECTOR) {
 	c.source= CREATE.feature[f]
 	c.target= CREATE.feature[f2]
 	c.color=BLUE
 }
 
-
-pred guard_containArc(f:ASM/Feature, f2:ASM/Feature) {
+ 
+pred guard_containArc(f:Feature, f2:Feature) {
 	f->f2 in contain
 }
 
-pred value_containArc(f:ASM/Feature, f2:ASM/Feature, c:LightningVLM/CONNECTOR) {
+pred value_containArc(f:Feature, f2:Feature, c:LightningVLM/CONNECTOR) {
 	c.source= CREATE.feature[f]
 	c.target= CREATE.feature[f2]
 	c.color=BLACK
 }
 
 
-pred guard_reqArc(f:ASM/Feature, f2:ASM/Feature) {
+pred guard_reqArc(f:Feature, f2:Feature) {
 		f->f2 in required
 }
 
-pred value_reqArc(f:ASM/Feature, f2:ASM/Feature, c:LightningVLM/CONNECTOR) {
+pred value_reqArc(f:Feature, f2:Feature, c:LightningVLM/CONNECTOR) {
 	c.source= CREATE.feature[f]
 	c.target= CREATE.feature[f2]
 	c.color=GREEN
 }
 
-pred guard_exclArc(f:ASM/Feature, f2:ASM/Feature) {
+pred guard_exclArc(f:Feature, f2:Feature) {
 		f->f2 in excluded
 }
 
-pred value_exclArc(f:ASM/Feature, f2:ASM/Feature, c:LightningVLM/CONNECTOR) {
+pred value_exclArc(f:Feature, f2:Feature, c:LightningVLM/CONNECTOR) {
 		c.source= CREATE.feature[f]
 		c.target= CREATE.feature[f2]
 		c.color=RED
 }
 
+ 
+pred guard_text(f:Feature) {
+}
+
+pred value_text(f:Feature, t:TEXT) {
+	t.textLabel[0]=f
+}
 

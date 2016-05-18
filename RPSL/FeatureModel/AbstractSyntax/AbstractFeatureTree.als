@@ -1,14 +1,14 @@
-module FeatureModel/AbstractSyntax/ASM
+module FeatureModel/AbstractSyntax/AbstractFeatureTree
 
 //FEATURE TREE
 
-sig FeatureTree{
+abstract sig FeatureTree{
 	root: Feature
 }{
 	root.~(contain+spec)=none
 }
 
-sig Feature{
+abstract sig Feature{
 	spec: set Feature,
 	contain: set Feature,
 	excluded: set Feature, 
@@ -45,7 +45,7 @@ sig Feature{
 }
 
 
-sig Configuration{
+abstract sig Configuration{
 	selectedFeatures: set Feature,
 
 }{

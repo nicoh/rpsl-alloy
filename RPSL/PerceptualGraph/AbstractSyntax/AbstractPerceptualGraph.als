@@ -1,8 +1,8 @@
-module PerceptualGraph/AbstractSyntax/ASM
+module PerceptualGraph/AbstractSyntax/AbstractPerceptualGraph
 
 
 
-lone sig PerceptualGraph{
+abstract sig PerceptualGraph{
 	components: set Component,
 	connections : Output -> Input,
 	compGraph : Component -> Component
@@ -29,11 +29,11 @@ abstract sig Port {
 
 abstract sig Concept{}
 
-sig Input extends Port {}{
+abstract sig Input extends Port {}{
 	this in Component.input 
 }
 
-sig Output extends Port {}{
+abstract sig Output extends Port {}{
 	this in Component.output 
 }
 
@@ -45,11 +45,11 @@ abstract sig Component {
 	this in PerceptualGraph.components
 }
 
-sig SensorComponent extends Component {}{
+abstract sig SensorComponent extends Component {}{
  #(input) = 0 and #(output) > 0
  }
 
-sig ProcessingComponent extends Component {}{
+abstract sig ProcessingComponent extends Component {}{
   #(input) > 0 and #(output) > 0
 }
 

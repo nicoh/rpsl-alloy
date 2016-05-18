@@ -1,7 +1,7 @@
 eclipse.preferences.version=1
-languagePrefs/FeatureModel/selectedASM=ASM
+languagePrefs/FeatureModel/selectedASM=PickAndPlace
 languagePrefs/FeatureModel/selectedCSM=Ftree2VLM
-languagePrefs/PerceptualGraph/selectedASM=ASM
+languagePrefs/PerceptualGraph/selectedASM=ContainerRecognitionGraph
 languagePrefs/PerceptualGraph/selectedCSM=Pgraph2VLM
 languagePrefs/RPSL/selectedASM=ASM
 languagePrefs/RPSL/selectedCSM=Pgraph2VLM
