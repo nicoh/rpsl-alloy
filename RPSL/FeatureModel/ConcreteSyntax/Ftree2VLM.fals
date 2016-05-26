@@ -19,7 +19,7 @@ pred guard_feature(f:Feature) {
 }
 
 pred value_feature(f:Feature, r:LightningVLM/RECTANGLE) {
-	r.color=(f in Configuration.selectedFeatures implies GREEN else WHITE) 
+	r.color=WHITE 
 	r.composedOf[0]= CREATE.text[f]
 }
 

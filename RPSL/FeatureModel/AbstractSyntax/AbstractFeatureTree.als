@@ -45,15 +45,5 @@ abstract sig Feature{
 }
 
 
-abstract sig Configuration{
-	selectedFeatures: set Feature,
-
-}{
-	no disj x,y:selectedFeatures | x.excluded=y and y not in x.~*spec.*spec
-	selectedFeatures.required in selectedFeatures.~*(spec+contain)
-	selectedFeatures.(contain+spec)=none
-	 
-}
-
 
 run{} for 10

@@ -3,5 +3,5 @@ languagePrefs/FeatureModel/selectedASM=PickAndPlace
 languagePrefs/FeatureModel/selectedCSM=Ftree2VLM
 languagePrefs/PerceptualGraph/selectedASM=ContainerRecognitionGraph
 languagePrefs/PerceptualGraph/selectedCSM=Pgraph2VLM
-languagePrefs/RPSL/selectedASM=ASM
-languagePrefs/RPSL/selectedCSM=Pgraph2VLM
+languagePrefs/RPSL/selectedASM=Configuration
+languagePrefs/RPSL/selectedCSM=Conf2VLM

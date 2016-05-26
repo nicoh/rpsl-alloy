@@ -1,0 +1,163 @@
+module RPSL/ConcreteSyntax/Conf2VLM
+
+//open FeatureModel/AbstractSyntax/AbstractFeatureTree
+
+open RPSL/AbstractSyntax/Configuration
+open RPSL/ConcreteSyntax/LightningVLM
+
+one sig CREATE{
+	
+//	GRAPH
+	mainFrame : Component -> INVISIBLE_CONTAINER,
+	inputFrame: ProcessingComponent -> INVISIBLE_CONTAINER,
+	outputFrame: Component -> INVISIBLE_CONTAINER,
+	inputPort: Input -> RECTANGLE,
+	outputPort: Output -> RECTANGLE,
+	component : Component -> RECTANGLE,
+	arc: Output -> Input -> CONNECTOR,
+	ctext: Component -> TEXT,
+//TREE
+	feature: Feature->RECTANGLE,
+	text: Feature->TEXT,
+	specArc: Feature -> Feature -> CONNECTOR,
+	containArc: Feature -> Feature -> CONNECTOR,
+	reqArc: Feature -> Feature -> CONNECTOR,
+	exclArc: Feature -> Feature -> CONNECTOR,
+	
+} 
+
+
+
+
+
+pred guard_component(c:Component) {
+	c in SuperGraph.components
+}
+pred value_component(c:Component, r:RECTANGLE) {
+	r.color= (c in ProcessingComponent implies WHITE else BLACK)
+}
+
+pred guard_arc(o:Output, i:Input) {
+	o->i in SuperGraph.connections
+}
+
+pred value_arc(o:Output, i:Input, c:CONNECTOR) {
+	c.source=CREATE.outputPort[o]
+	c.target=CREATE.inputPort[i]
+	c.color=RED
+}
+
+pred guard_ctext(c:Component) {
+	c in SuperGraph.components
+}
+
+pred value_ctext(c:Component, t:TEXT) {
+	t.textLabel[0]=c
+	t in CREATE.(component)[c].composedOf[0]
+	t.color=(c in SensorComponent implies WHITE else BLACK)
+}
+
+pred guard_mainFrame(c:Component) {
+	c in SuperGraph.components
+}
+
+pred value_mainFrame(c:Component, i:LightningVLM/INVISIBLE_CONTAINER) {
+	i.composedOf[0]=CREATE.inputFrame[c]
+	i.composedOf[1]=CREATE.component[c]
+	i.composedOf[2]=CREATE.outputFrame[c]
+	i.layout=HORIZONTAL_LAYOUT
+}
+
+pred guard_inputFrame(p:ProcessingComponent) {
+	p.input!=none and p in SuperGraph.components
+}
+
+pred value_inputFrame(p:ProcessingComponent, i:LightningVLM/INVISIBLE_CONTAINER) {
+	i.layout= VERTICAL_LAYOUT
+}
+
+pred guard_outputFrame(c:Component) {
+	c.output!=none and c in SuperGraph.components
+}
+
+pred value_outputFrame(c:Component, i:LightningVLM/INVISIBLE_CONTAINER) {
+	i.layout=VERTICAL_LAYOUT
+}
+
+pred guard_inputPort(i:Input) {
+	i in SuperGraph.components.input
+}
+
+pred value_inputPort(i:Input, r:LightningVLM/RECTANGLE) {
+	r.color=GREEN
+	r in CREATE.inputFrame[i.~input].composedOf[0]
+}
+
+pred guard_outputPort(o:Output) {
+		o in SuperGraph.components.output
+}
+
+pred value_outputPort(o:Output, r:LightningVLM/RECTANGLE) {
+	r.color=RED
+	r in CREATE.outputFrame[o.~output].composedOf[0]
+}
+
+pred guard_feature(f:Feature) {
+}
+
+pred value_feature(f:Feature, r:LightningVLM/RECTANGLE) {
+	r.color=(f in Configuration.selectedFeatures implies GREEN else WHITE) 
+	r.composedOf[0]= CREATE.text[f]
+}
+
+
+pred guard_specArc(f:Feature, f2:Feature) {
+	f->f2 in spec
+}
+
+pred value_specArc(f:Feature, f2:Feature, c:LightningVLM/CONNECTOR) {
+	c.source= CREATE.feature[f]
+	c.target= CREATE.feature[f2]
+	c.color=BLUE
+}
+
+ 
+pred guard_containArc(f:Feature, f2:Feature) {
+	f->f2 in contain
+}
+
+pred value_containArc(f:Feature, f2:Feature, c:LightningVLM/CONNECTOR) {
+	c.source= CREATE.feature[f]
+	c.target= CREATE.feature[f2]
+	c.color=BLACK
+}
+
+
+pred guard_reqArc(f:Feature, f2:Feature) {
+		f->f2 in required
+}
+
+pred value_reqArc(f:Feature, f2:Feature, c:LightningVLM/CONNECTOR) {
+	c.source= CREATE.feature[f]
+	c.target= CREATE.feature[f2]
+	c.color=GREEN
+}
+
+pred guard_exclArc(f:Feature, f2:Feature) {
+		f->f2 in excluded
+}
+
+pred value_exclArc(f:Feature, f2:Feature, c:LightningVLM/CONNECTOR) {
+		c.source= CREATE.feature[f]
+		c.target= CREATE.feature[f2]
+		c.color=RED
+}
+
+ 
+pred guard_text(f:Feature) {
+}
+
+pred value_text(f:Feature, t:TEXT) {
+	t.textLabel[0]=f
+}
+

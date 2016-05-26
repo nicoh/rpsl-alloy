@@ -1,6 +1,10 @@
 module PerceptualGraph/AbstractSyntax/AbstractPerceptualGraph
 
 
+pred  PerceptualGraph::contains(g: PerceptualGraph){
+	g.components in this.components
+	g.connections in this.connections
+}
 
 abstract sig PerceptualGraph{
 	components: set Component,
