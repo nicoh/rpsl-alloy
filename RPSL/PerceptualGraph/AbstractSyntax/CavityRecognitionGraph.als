@@ -1,6 +1,7 @@
 module PerceptualGraph/AbstractSyntax/CavityRecognitionGraph
 
 open PerceptualGraph/AbstractSyntax/AbstractPerceptualGraph
+open PerceptualGraph/AbstractSyntax/libs/Concepts
 
 one sig CavityRecognitionGraph extends PerceptualGraph{}{
         components = CavityRecog
@@ -19,15 +20,6 @@ one sig  outCavity extends Output {}{
 }
 one sig  outCloud extends Output {}{
         type=xyzRGB
-}
-
-one sig  Plane extends Concept{}{
-}
-
-one sig  xyzRGB extends Concept{}{
-}
-
-one sig  Cavity extends Concept{}{
 }
 
 one sig CavityRecog extends ProcessingComponent {}{

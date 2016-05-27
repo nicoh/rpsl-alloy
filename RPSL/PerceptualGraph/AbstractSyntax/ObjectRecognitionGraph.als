@@ -1,6 +1,7 @@
 module PerceptualGraph/AbstractSyntax/ObjectRecognitionGraph
 
 open PerceptualGraph/AbstractSyntax/AbstractPerceptualGraph
+open PerceptualGraph/AbstractSyntax/libs/Concepts
 
 one sig ObjRecogGraph extends PerceptualGraph{}{
         components = Classifier
@@ -22,15 +23,6 @@ one sig  outObject extends Output {}{
 
 one sig  outCloud extends Output {}{
         type=xyzRGB
-}
-
-one sig  xyzRGB extends Concept{}{
-}
-
-one sig  Object extends Concept{}{
-}
-
-one sig BoundingBox extends Concept{}{
 }
 
 one sig Classifier extends ProcessingComponent {}{

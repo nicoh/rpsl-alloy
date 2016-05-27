@@ -2,6 +2,7 @@
 module PerceptualGraph/AbstractSyntax/Service2Graph
 
 open PerceptualGraph/AbstractSyntax/AbstractPerceptualGraph
+open PerceptualGraph/AbstractSyntax/libs/Concepts
 
 one sig Service2Graph extends PerceptualGraph{}{
         components = PlaneDetect + Kinect
@@ -19,11 +20,6 @@ one sig  outCloud extends Output {}{
         type=xyzRGB
 }
 
-one sig  xyzRGB extends Concept{}{
-}
-
-one sig  Plane extends Concept{}{
-}
 
 one  sig Kinect  extends SensorComponent{}{
   input = none

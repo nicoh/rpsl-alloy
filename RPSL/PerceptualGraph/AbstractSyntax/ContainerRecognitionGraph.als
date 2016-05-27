@@ -1,6 +1,7 @@
 module PerceptualGraph/AbstractSyntax/ContainerRecognitionGraph
 
 open PerceptualGraph/AbstractSyntax/AbstractPerceptualGraph
+open PerceptualGraph/AbstractSyntax/libs/Concepts
 
 one sig RedRecogGraph extends PerceptualGraph{}{
         components = RedContainRecog  
@@ -15,16 +16,10 @@ one sig  inPlane extends Input {}{
 }
 
 one sig  outContainer extends Output {}{
-        type=Container
+        type=Container 
 }
 one sig  outCloud extends Output {}{
         type=xyzRGB
-}
-
-one sig  xyzRGB extends Concept{}{
-}
-
-one sig  Plane extends Concept{}{
 }
 
 one sig RedContainRecog extends ProcessingComponent {}{
