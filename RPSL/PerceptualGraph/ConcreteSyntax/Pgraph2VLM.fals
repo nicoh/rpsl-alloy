@@ -1,7 +1,7 @@
 module PerceptualGraph/ConcreteSyntax/Pgraph2VLM
 
 //open PerceptualGraph/AbstractSyntax/AbstractPerceptualGraph
-open PerceptualGraph/AbstractSyntax/ContainerRecognitionGraph
+open PerceptualGraph/AbstractSyntax/allContainer
 open PerceptualGraph/ConcreteSyntax/LightningVLM
 
 one sig CREATE{

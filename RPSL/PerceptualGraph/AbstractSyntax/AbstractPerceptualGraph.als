@@ -6,22 +6,28 @@ pred  PerceptualGraph::contains(g: PerceptualGraph){
 	g.connections in this.connections
 }
 
+fun PerceptualGraph::getWeight():Int{
+	sum c:this.components| c.weight
+}
+
 abstract sig PerceptualGraph{
 	components: set Component,
-	connections : Output -> Input,
-	compGraph : Component -> Component
+	connections : set Output -> Input,
+	compGraph : set Component -> Component
 }{
+
 	 // all Input and output in connections belongs to the components of the graph.
 	all port:connections[Output] + connections.Input | port in components.(input+output)
 	// connections between input and output only possible if type is the same
 	all out : connections.Input | out.type = connections[out].type 
- 
-	compGraph[Component]+compGraph.Component = components
-	all c1,c2 : components| c2 in compGraph[c1] <=> c2 in connections[c1.output].~input 
+ 	// only components in graph components are in compGraph
+	//compGraph[Component]+compGraph.Component = components	
+// Output-> input and Component ->Component equivalence 
+	all disj c1,c2 : components| c2 in compGraph[c1] <=> c2 in connections[c1.output].~input 
 	//acyclic check 
 	no c:components| c in c.^compGraph
 	
-	some c : components | c.*( ~compGraph+ compGraph)=components 
+  compGraph[Component]+ compGraph.Component in components
 	
 }
 
@@ -44,8 +50,9 @@ abstract sig Output extends Port {}{
 abstract sig Component {
    input: disj set Input,
    output: disj set Output,
+   weight: Int
 }{
-	
+	weight in 1+2+3
 	this in PerceptualGraph.components
 }
 
@@ -59,5 +66,4 @@ abstract sig ProcessingComponent extends Component {}{
 
 
 
-
-run {some SensorComponent and some ProcessingComponent} for 10
+run{#weight<6} for 5 but 5 Int

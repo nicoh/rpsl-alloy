@@ -1,3 +1,4 @@
+
 module PerceptualGraph/AbstractSyntax/ContainerRecognitionGraph
 
 open PerceptualGraph/AbstractSyntax/AbstractPerceptualGraph
@@ -7,22 +8,22 @@ one sig RedRecogGraph extends PerceptualGraph{}{
         components = RedContainRecog  
 }
 
-one sig  inCloud extends Input {}{
+one sig  inCloudRRG extends Input {}{
         type=xyzRGB
 }
 
-one sig  inPlane extends Input {}{
+one sig  inPlaneRRG extends Input {}{
         type=Plane
 }
 
-one sig  outContainer extends Output {}{
+one sig  outContainerRRG extends Output {}{
         type=Container 
 }
-one sig  outCloud extends Output {}{
-        type=xyzRGB
-}
+
 
 one sig RedContainRecog extends ProcessingComponent {}{
-  input = inCloud + inPlane
-  output = outContainer
+  input = inCloudRRG + inPlaneRRG
+  output = outContainerRRG
 }
+
+run{} for 3

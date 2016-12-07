@@ -7,44 +7,32 @@ one sig FTree extends FeatureTree{}{
 }
 
 one sig Application extends Feature{}{
-        spec= none
-        contain=ObRecognition + ObDetection + ServiceArea + CavRecognition + ContRecognition
-        excluded=none
-        required=none
+		contain=ObRecognition + ObDetection + ServiceArea + CavRecognition + ContRecognition
+        spec+excluded+required= none
 }
 
 
 one sig ObRecognition extends Feature{}{
-        spec= none
-        contain=none
-        excluded=none
-        required=none
+ 		required=ServiceArea+ObDetection
+        spec+contain+excluded= none
 }
 
 one sig ObDetection extends Feature{}{
-        spec= none
-        contain=none
-        excluded=none
-        required=none
+ 		required=ServiceArea
+        spec+contain+excluded= none
 }
 
 one sig ServiceArea extends Feature{}{
-        spec= none
-        contain=none
-        excluded=none
         required=none
+        spec+contain+excluded= none
 }
 one sig CavRecognition extends Feature{}{
-        spec= none
-        contain=none
-        excluded=none
-        required=none
+		required=ServiceArea+ObDetection
+        spec+contain+excluded= none
 }
 one sig ContRecognition extends Feature{}{
-        spec= none
-        contain=none
-        excluded=none
-        required=none
+		required=ServiceArea+ObDetection
+        spec+contain+excluded= none
 }
 
 

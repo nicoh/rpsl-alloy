@@ -16,6 +16,9 @@ one sig CREATE{
 	component : Component -> RECTANGLE,
 	arc: Output -> Input -> CONNECTOR,
 	ctext: Component -> TEXT,
+	superGraphWeight: Configuration -> TEXT,
+	confTitle: Configuration -> TEXT,
+	confBox: Configuration -> RECTANGLE,
 //TREE
 	feature: Feature->RECTANGLE,
 	text: Feature->TEXT,
@@ -34,7 +37,7 @@ pred guard_component(c:Component) {
 	c in SuperGraph.components
 }
 pred value_component(c:Component, r:RECTANGLE) {
-	r.color= (c in ProcessingComponent implies WHITE else BLACK)
+	r.color=(c.weight=1 implies WHITE else (c.weight=2 implies YELLOW else ORANGE))
 }
 
 pred guard_arc(o:Output, i:Input) {
@@ -52,9 +55,12 @@ pred guard_ctext(c:Component) {
 }
 
 pred value_ctext(c:Component, t:TEXT) {
-	t.textLabel[0]=c
+	t.textLabel[0]=feature2Graph.mapping.(c.~components - SuperGraph)
+	t.textLabel[1]=":"
+	t.textLabel[2]=c
+
 	t in CREATE.(component)[c].composedOf[0]
-	t.color=(c in SensorComponent implies WHITE else BLACK)
+	t.color=BLACK
 }
 
 pred guard_mainFrame(c:Component) {
@@ -102,6 +108,35 @@ pred value_outputPort(o:Output, r:LightningVLM/RECTANGLE) {
 	r in CREATE.outputFrame[o.~output].composedOf[0]
 }
 
+
+pred guard_confBox(s:Configuration) {
+}
+
+pred value_confBox(s:Configuration, r:RECTANGLE) {
+	r.color=BLACK
+}
+pred guard_superGraphWeight(s:Configuration) {
+}
+
+pred value_superGraphWeight(s:Configuration, t:TEXT) {
+	t.textLabel[0]="Total Weight:"
+	t.textLabel[1]=SuperGraph.getWeight[]
+	t.color=WHITE
+	t in CREATE.confBox[s].composedOf[0]
+}
+
+
+pred guard_confTitle(s:Configuration) {
+}
+
+pred value_confTitle(s:Configuration, t:TEXT) {
+	t.textLabel[0]=s
+	t.color=WHITE
+	t.isBold=True
+	t in CREATE.confBox[s].composedOf[0]
+}
+
+// TREE
 pred guard_feature(f:Feature) {
 }
 

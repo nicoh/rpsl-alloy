@@ -7,28 +7,27 @@ open PerceptualGraph/AbstractSyntax/libs/Concepts
 
 one sig Service1Graph extends PerceptualGraph{}{
         components = PlaneDetect + Kinect
-        connections = outCloud -> inCloud
+        connections = outCloudSG1 -> inCloudSG1
         compGraph = Kinect -> PlaneDetect 
 }
 
-one sig  inCloud extends Input {}{
+one sig  inCloudSG1 extends Input {}{
         type=xyzRGB
 }
-one sig  outPlane extends Output {}{
+one sig  outPlaneSG1 extends Output {}{
         type=Plane
 }
-one sig  outCloud extends Output {}{
+one sig  outCloudSG1 extends Output {}{
         type=xyzRGB
 }
 
 
 one  sig Kinect  extends SensorComponent{}{
   input = none
-  output = outCloud
+  output = outCloudSG1
  }
 
 one sig PlaneDetect extends ProcessingComponent {}{
-  input = inCloud
-  output = outPlane
+  input = inCloudSG1
+  output = outPlaneSG1
 }
-
