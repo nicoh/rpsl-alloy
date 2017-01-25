@@ -6,8 +6,8 @@ abstract sig Processor {
 sig Cpu extends Processor {
 }
 
-//sig Gpu extends Processor {
-//}
+sig Gpu extends Processor {
+}
 
 sig VirtualProcessor extends Processor {
 }
@@ -23,11 +23,12 @@ abstract sig Memory {}{
 
 sig Ram extends Memory {}
 
-sig Hub {}
+sig Bus {}
 
 sig NetworkInterface {
+   connectedTo: one Bus
 } {
-   this in Platform.networkInterfaces
+   this in Platform.networkInterfaces  
 }
 
 sig Platform {
@@ -35,7 +36,6 @@ sig Platform {
    device: disj set Device,
    memory: disj set Memory,
    networkInterfaces: disj set NetworkInterface,
-   //connections: set NetworkInterface -> Hub
 }{
    one p: processor | p in Cpu
    one m: memory | m in Ram
