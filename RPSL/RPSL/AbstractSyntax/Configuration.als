@@ -30,8 +30,6 @@ one sig Configuration{
 	 
 }
 
-fact{
-	ObRecognition in Configuration.selectedFeatures and some (SensorComponent & xyzRGB.~type.~output ) & SuperGraph.components
-}
-run {}  for 5 but 5 Int
+
+run { }  for 5 but 5 Int
 
